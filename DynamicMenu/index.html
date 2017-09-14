@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>灵动菜单</title>
+    <style type="text/css">
+        .wrap {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            width: 100%;
+            height: 200px;
+            background-color: green;
+        }
+
+        .menu {
+            height: 37px;
+            background: yellow url(img/menu.png) center no-repeat;
+        }
+
+        .other {
+            width: 100%;
+            height: 1200px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header"></div>
+        <div class="menu"></div>
+        <div class="other"></div>
+    </div>
+
+    <script type="text/javascript" src="../tools/jQuery/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var $menu = $('.menu'),
+                offsetTop = $menu.offset().top;
+            console.log(offsetTop)
+        });
+    </script>
+</body>
+</html>
