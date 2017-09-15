@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>灵动菜单</title>
     <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
         .wrap {
             width: 1000px;
             margin: 0 auto;
@@ -17,7 +22,13 @@
 
         .menu {
             height: 37px;
-            background: yellow url(img/menu.png) center no-repeat;
+            width: 1000px;
+            background: url(img/menu.png) center no-repeat;
+        }
+
+        .menu.fixed {
+            position: fixed;
+            top: 0;
         }
 
         .other {
@@ -25,21 +36,38 @@
             height: 1200px;
             background-color: blue;
         }
+
+        .other.fixed {
+            margin-top: 35px;
+        }
     </style>
 </head>
 <body>
     <div class="wrap">
         <div class="header"></div>
         <div class="menu"></div>
-        <div class="other"></div>
+        <div class="other">
+            sdfdddddddddddddddddddddddddddddddddddddddd
+        </div>
     </div>
 
     <script type="text/javascript" src="../tools/jQuery/jquery-3.2.1.js"></script>
     <script type="text/javascript">
         $(function() {
-            var $menu = $('.menu'),
-                offsetTop = $menu.offset().top;
-            console.log(offsetTop)
+            // scroll事件只属于window事件，不属于body和html
+            $(window).on('scroll', function() {
+                var $this = $(this),
+                    $menu = $('.menu'),
+                    $other = $('.other'),
+                    heightOfHeader = $('.header').height(),
+                    heightOfScroll = $this.scrollTop();
+
+                if (heightOfScroll >= heightOfHeader) {
+                    $menu.add($other).addClass('fixed');
+                } else {
+                    $menu.add($other).removeClass('fixed');
+                }
+            });
         });
     </script>
 </body>

@@ -2,9 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>滑动停靠菜单</title>
+    <title>滑动停靠菜单菜单</title>
+
+    <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            .slide-nav {
+                width: 106px;
+                height: 412px;
+                background-color: #fffccc;
+                position: fixed;
+                right: -106px;
+                top: 50%;
+                margin-top: -206px;
+            }
+
+            .slide-nav-menu {
+                background: url(img/menu.png);
+                height: 412px;
+            }
+
+            .slide-nav-in {
+                display: block;
+                background: url(img/leftin.png);
+                width: 45px;
+                height: 112px;
+                position: absolute;
+                left: -44px;
+                top: 130px;
+                cursor: pointer;
+            }
+
+             /*.slide-nav-in:hover  {
+                background: url(img/out.png);
+             }*/
+    </style>
 </head>
 <body>
+        <div class="slide-nav">
+            <a class="slide-nav-in"></a>
+            <div class="slide-nav-menu"></div>
+        </div>
 
+        <script type="text/javascript" src="../tools/jQuery/jquery-3.2.1.js"></script>
+        <script type="text/javascript">
+            !function() {
+                $('.slide-nav').hover(function() {
+                    $('.slide-nav-in').css('background', 'url(img/rightout.png)');
+                }, function() {
+                    $('.slide-nav-in').css('background', 'url(img/leftin.png)');
+                });
+                //  这里需要注意的是mouseenter和mouseleave是jQuery的方法，不会产生冒泡
+                $('.slide-nav')
+                        .on('mouseenter', function() {
+                            $(this).animate({right: 0}, 300);
+                        })
+                        .on('mouseleave', function() {
+                            $(this).animate({right: -106}, 300);
+                      });
+            }();
+        </script>
 </body>
 </html>

@@ -10,7 +10,6 @@
                 $('.goTop').slideDown();
             } else {
                 $('.goTop').slideUp();
-
             }
         });
 
