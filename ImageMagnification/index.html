@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        <title>图片放大镜</title>
+        <style type="text/css">
+                * {
+                        padding: 0;
+                        margin: 0;
+                }
+
+                .img-wap {
+                        position: relative;
+                        width: 400px;
+                }
+
+                .original-img {
+                        width: 400px;
+                }
+
+                .magnification-img {
+                        position: absolute;
+                        right: -210px;
+                        top: 0px;
+                        width: 200px;
+                        height: 200px;
+                        background-color: red;
+                        display: none;
+                        background-image: url(img/menna.jpg);
+                }
+
+                .follow-div {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100px;
+                        height: 100px;
+                        opacity:  0.4;
+                        background-color: #fff;
+                        display: none;
+                }
+        </style>
+</head>
+<body>
+        <div class="img-wap">
+                <img class="b-img" src="img/menna.jpg" alt="" style="display: none;">
+                <img class="original-img" src="img/menna.jpg">
+                <div class="magnification-img"></div>
+                <div class="follow-div"></div>
+        </div>
+
+        <script type="text/javascript" src="../tools/jQuery/jquery-3.2.1.js"></script>
+        <script type="text/javascript">
+                $(function() {
+                        var $imgWap = $('.img-wap'),
+                                $bImg = $('.b-img'),
+                                $originalImg = $('.original-img'),
+                                $magnificationImg = $('.magnification-img'),
+                                $followDiv = $('.follow-div'),
+                                bWidth = $bImg.width(),
+                                bHeight = $bImg.height(),
+                                oImgWidth = $originalImg.width(),
+                                oImgHeight = $originalImg.height(),
+                                scale = bWidth / oImgWidth;
+
+                        $imgWap.on('mouseover mouseout', function() {
+                                $magnificationImg.add($followDiv).toggle();
+                        });
+
+                        $imgWap.on('mousemove', function(e) {
+                                var x = e.clientX,
+                                        y = e.clientY;
+
+                                if (x + 50 >= oImgWidth) {
+                                        x = oImgWidth - 50;
+                                }
+
+                                if (x - 50 <= 0) {
+                                        x = 50;
+                                }
+
+                                if (y - 50 <= 0) {
+                                        y = 50;
+                                }
+
+                                if (y + 50 >= oImgHeight) {
+                                        y = oImgHeight - 50;
+                                }
+
+                                $followDiv.css({
+                                        left: x - 50,
+                                        top: y - 50
+                                });
+
+                                $magnificationImg.css('background-position', -x * scale + 50 + 'px' + ' ' + (-y * scale + 50) + 'px');
+                        });
+
+
+
+
+
+                });
+        </script>
+
+</body>
+</html>
