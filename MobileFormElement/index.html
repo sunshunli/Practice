@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>触屏表单组件</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <style type="text/css">
+                input:focus {
+                        outline: none;
+                }
+                /*单选按钮*/
+                input[type=radio] {
+                        background-image: url(img/CheckBoxAndRadio.jpg);
+                        -webkit-appearance: none;
+                        width: 16px;
+                        height: 17px;
+                        background-position: 22px 47px;
+                }
+
+                input[type=radio]:checked {
+                        background-position: -4px 47px;
+                }
+                /*复选按钮*/
+                input[type=checkbox] {
+                        background-image: url(img/CheckBoxAndRadio.jpg);
+                        -webkit-appearance: none;
+                        width: 16px;
+                        height: 17px;
+                        background-position: 20px 0px;
+                }
+
+                input[type=checkbox]:checked {
+                        background-position: -6px 0px;
+                }
+                /*开关按钮*/
+                input.switch-btn {
+                        background-image: url(img/OnOffBtn.png);
+                        background-position: 0px 0px;
+                        width: 88px;
+                        height: 38px;
+                        /*-webkit-transition: all 0.3s ease-in-out;*/
+                }
+
+                input.switch-btn:checked {
+                        background-position: -88px 0px;
+                }
+        </style>
+</head>
+<body>
+        <input type="radio" name="gender" value="男">
+        <input type="radio" name="gender" value="女">
+
+        <hr>
+
+        <input type="checkbox" name="">
+        <input type="checkbox" name="">
+        <hr>
+
+        <input type="checkbox" class="switch-btn" name="">
+
+</body>
+</html>
