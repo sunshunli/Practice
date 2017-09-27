@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>日历选择器</title>
+</head>
+<body>
+
+    <!-- <input type="text" onclick="WdatePicker()"> -->
+    请输入你的生日：<input id="birthday" type="text" readonly>
+
+    <script type="text/javascript" src="../tools/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        var birthday = document.getElementById('birthday');
+
+        /*birthday.onclick = WdatePicker;*/
+
+        birthday.onclick = function() {
+            WdatePicker({dateFmt:'yyyy年MM月dd日', doubleCalendar:true});
+        };
+
+    </script>
+</body>
+</html>

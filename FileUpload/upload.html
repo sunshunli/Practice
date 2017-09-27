@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <style>
+        .wp {
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        .wp > div {
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .upload-btn {
+            border: 1px solid red;
+            padding: 5px 20px;
+            position: relative;
+        }
+
+        .file-upload {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 32px;
+            width: 73px;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .file-upload input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 32px;
+            width: 73px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wp">
+        <div>
+            <label for="">
+                姓名: <input id="username" type="text" name="">
+            </label>
+        </div>
+        <div>
+            <label for="">
+                头像:
+                <span id="pic" sname="" class="upload-btn">
+                    上传
+                    <form id="uploadForm" class="file-upload" target="uploadHelper" action="../Server/upload.php" method="post" enctype="multipart/form-data">
+                        <input id="picInputId" type="file" name="pic">
+                    </form>
+                </span>
+            </label>
+        </div>
+        <div>
+            <input id="regBtn" type="button" name="" value="注册">
+        </div>
+    </div>
+
+    <iframe style="display: none" name="uploadHelper" src=""></iframe>
+
+
+    <script type="text/javascript" src="../tools/jQuery/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        var $picInputId = $('#picInputId');
+
+        $picInputId.on('change', function() {
+            var sname,
+                $uploadHelper = $('iframe[name=uploadHelper]');
+            $('#uploadForm').submit();
+
+            timer = setInterval(function() {
+                sname = $uploadHelper.contents().find('body').text();
+                if (sname != '') {
+                    clearInterval(timer);
+                    sname = $.parseJSON(sname);
+                    $('#pic').attr('sname', sname.fileName); //filename是服务器端返回的字段名
+                    $uploadHelper.contents().find('body').html();
+                }
+            }, 1000);
+
+        });
+
+        $('#regBtn').on('click', function() {
+            var data = {
+                username: $('#username').val(),
+                pic: $('#pic').attr('sname')
+            };
+        });
+    </script>
+</body>
+</html>
