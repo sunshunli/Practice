@@ -23,8 +23,10 @@
 
         $flyer.fly({
             start: {
-                left: event.pageX,
-                top: event.pageY
+                /*left: event.pageX,
+                top: event.pageY*/
+                left: event.clientX,
+                top: event.clientY
             },
             end: {
                 // left: offset.left,
