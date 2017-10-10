@@ -1,3 +1,4 @@
+'use strict'
 /*
  * @Author: Shunli Sun
  * @Date:   2017-10-09
@@ -15,7 +16,7 @@
  */
 // 在gulpfile中先载入gulp包，因为这个包提供了一些API
 var gulp = require('gulp'),
-    less = require('gulp-less'), // 将less文件翻译成css
+    sass = require('gulp-sass'),
     cssnano = require('gulp-cssnano'), // css压缩
     browserSync = require('browser-sync'), // 同步浏览器
     htmlmin = require('gulp-htmlmin'), // 压缩html文件
@@ -24,12 +25,13 @@ var gulp = require('gulp'),
     babel = require('gulp-babel'),
     rev=require('gulp-rev'), // 对文件名加MD5后缀防止缓存
     revCollector=require('gulp-rev-collector'), // 路径替换
+    sourcemaps = require('gulp-sourcemaps'),
     clean=require('gulp-clean');// 清理
 
 // 1. LESS编译 压缩 --合并没有必要，一般预处理CSS都可以导包
 gulp.task('style', function() {
   gulp.src(['src/styles/*.less', 'src/styles/*.css', '!src/styles/_*.less'])
-    .pipe(less())
+    .pipe(sass().on('error', sass.logError))
     .pipe(cssnano())
     .pipe(rev())
     .pipe(gulp.dest('dist/styles'))
@@ -43,16 +45,21 @@ gulp.task('style', function() {
 // 2. JS合并 压缩混淆
 gulp.task('script', function() {
   gulp.src('src/scripts/*.js')
+    .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['env']
     }))
-    .pipe(concat('all.js'))
-    .pipe(uglify({
+    .pipe(concat({path: 'bundle.js', cwd: ''}))
+    .pipe(uglify(/*{
       mangle: true, // false不混淆变量名，true为混淆
       preserveComments: 'some' // 不删除注释，还可以为false（删除全部注释）some（保留@preserve @license @cc_on等注释）
-    }))
+    }*/))
+
     .pipe(rev())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/scripts'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('rev/scripts'))
     .pipe(browserSync.reload({
       stream: true
     }));
@@ -89,7 +96,9 @@ gulp.task('clean', function() {
 // 6. 路径替换任务，因为使用了gulp-rev,编译后的文件名改变了，所以要修改html中引用的文件名
 gulp.task('rev',function(){
   gulp.src(['rev/*/*json','src/*.html'])
-    .pipe(revCollector())
+    .pipe(revCollector({
+      replaceReved: true
+    }))
     .pipe(gulp.dest('./dist'));
 });
 
